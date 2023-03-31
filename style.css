@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: black ;
+}
+h1 {
+    margin: auto;
+    background-color: yellow;
+    font-size: 50px;
+    font-weight: 200;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-style: oblique;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+p{
+    margin: auto;
+    color: white;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 20;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-style: oblique;
+}
