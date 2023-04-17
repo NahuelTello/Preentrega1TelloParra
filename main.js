@@ -1,6 +1,6 @@
 
 //funcion
-function login(pin) {
+/* function login(pin) {
 
     let access = false;
 
@@ -16,36 +16,36 @@ function login(pin) {
     }
 
     return access
-} 
+}  */
 
 /* Funcion que suma dos numeros enteros */
-function suma (a,b){
+/* function suma (a,b){
     let resultado = a + b
     return resultado
-}
+} */
 /* Funcion que resta dos numeros enteros */
-function resta(a, b) {
+/* function resta(a, b) {
     let resultado = a - b
     return resultado
-}
+} */
 
 
 
 
 
 //Funcion que pasa de Celcius a Fahrenheit
-function C_A_F(tempCelc) {
+/* function C_A_F(tempCelc) {
     // Para calcular cuántos grados Fahrenheit son X grados Celsius, tenemos que multiplicar los X grados Celsius por 1,8 y sumarle 32.
     let tempFahrenheit = suma((tempCelc * 9/5) , 32)
-    return tempFahrenheit
-}
+   */ /*  return tempFahrenheit */
+/* } */
 //Funcion que pasa de Fahrenheit a Celcius
-function F_A_C(tempFah) {
+/* function F_A_C(tempFah) {
     let tempCelcius = resta(tempFah,32) * 5/9
     return tempCelcius
-}
+} */
 
-let userName = prompt("Ingrese una contraseña mayor de 8 caracteres")
+/* let userName = prompt("Ingrese una contraseña mayor de 8 caracteres")
 if(login(userName)){
     let opcion = prompt('Ingrese una opcion. \n1) Pasar de Celcius a Fahrenheit. \n2) Pasar de Fahrenheit a Celsius. \n3) Verificar cual es la temperatura mayor \n Salir (X) ')
     while (opcion != 'x' && opcion != 'X') {
@@ -93,20 +93,99 @@ if(login(userName)){
 }   
 
 alert('Adiós');
+ */
 
 
 
+/* ----------------------------------------------------------------- */
+
+const Persona = function (nombre, apellido, sexo, edad){
+    this.nombre = nombre,
+    this.apellido = apellido,
+    this.sexo = sexo,
+    this.edad = edad
+}   
+
+let persona1 = new Persona("Nahuel", "Tello", "Masculino", 22)
+let persona2 = new Persona("Agustina", "Tello", "Femenino", 21)
+let persona3 = new Persona("Abril", "Tello", "Femenino", 19)
+let persona4 = new Persona("Jorge", "Rodriguez", "Masculino", 40)
+
+let arrayPersonas = [persona1, persona2, persona3, persona4]
+
+console.table(arrayPersonas)
+
+function buscarPeronsa() {
+    let nombrePersona = prompt("Ingresar el nombre de la persona que busca").trim().toUpperCase()
+    let personaEncontrada = arrayPersonas.filter((persona)=> persona.nombre.toUpperCase().includes(nombrePersona))
+
+    if(personaEncontrada.length > 0){
+        console.table(personaEncontrada)
+    } else{
+        console.log("No se pudo encontrar a la persona intente nuevamente")
+    }
+}
+
+function agregarPersona() {
+    let nombre = prompt("Ingrese el nombre").trim()
+    let apellido = prompt("Ingrese el apellido").trim()
+    let sexo = prompt("Ingrese el sexo").trim()
+    let edad = parseInt(prompt("Ingrese la edad"))
+
+    if (nombre === "" || apellido === "" || sexo === "" || isNaN(edad)) {
+        alert("Datos erróneos, intentar nuevamente!")
+        return;
+    }
+
+    let personaNueva = new Persona (nombre, apellido, sexo, edad)
+
+    if(arrayPersonas.some((persona)=> persona.nombre === personaNueva.nombre)){
+        alert("La persona ya esta ingresada! ")
+        return
+    }
+
+    arrayPersonas.push(personaNueva)
+    console.table(arrayPersonas)
+}
 
 
+function quitarPersona(){
+    let nombre = prompt("Ingrese el nombre").trim()
+    let apellido = prompt("Ingrese el apellido").trim()
+    let sexo = prompt("Ingrese el sexo").trim()
+    let edad = parseInt(prompt("Ingrese la edad"))
 
+    if (nombre === "" || apellido === "" || sexo === "" || isNaN(edad)) {
+        alert("Datos erróneos, intentar nuevamente!")
+        return;
+    }
 
+    let personaAeliminar = new Persona(nombre, apellido, sexo, edad)
+    if (arrayPersonas.some((persona)=> persona.nombre === personaAeliminar.nombre)) {
+        alert("Esta persona no existe en nuestra lista!")
+    }
 
+    arrayPersonas.splice(nombre)
+    console.table(arrayPersonas)
 
+}
 
+let opcion = prompt('Ingrese una opcion. \n1) Buscar Cliente. \n2) Agregar Cliente. \n3) Eliminar Cliente \n Salir (X) ')
+while (opcion != 'x' && opcion != 'X') {
+    {
+        if (parseInt(opcion) == 1) {
+            buscarPeronsa()
+        } else if (parseInt(opcion) == 2) {
+            agregarPersona()
+        } else if (parseInt(opcion) == 3) {
+            quitarPersona()
+        } else {
+            alert('Elegiste una opción inválida')
+        };
+    }
 
-
-
-
+    opcion = prompt('Ingrese una opcion. \n1) Buscar Cliente. \n2) Agregar Cliente. \n3) Eliminar Cliente \n Salir (X) ')
+}
 
 
 
