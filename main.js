@@ -1,11 +1,13 @@
 
 // creamos la funcion de objeto persona
-const Persona = function (nombre, apellido, sexo, edad){
-    this.nombre = nombre,
-    this.apellido = apellido,
-    this.sexo = sexo,
-    this.edad = edad
-}   
+class Persona { 
+    constructor (nombre, apellido, sexo, edad){
+        this.nombre = nombre,
+        this.apellido = apellido,
+        this.sexo = sexo,
+        this.edad = edad 
+        }
+    }
 //llamamos al constructor del objeto persona
 let persona1 = new Persona("Juan", "Tortorielo", "M", 22)
 let persona2 = new Persona("Maria", "De la Fuente", "F", 21)
