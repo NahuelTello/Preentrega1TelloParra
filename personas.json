@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Nahuel",
+        "apellido": "Tello",
+        "sexo": "M",
+        "edad":22
+    },
+    {
+        "nombre": "Jorge",
+        "apellido": "Morales",
+        "sexo": "M",
+        "edad":32
+    },
+    {
+        "nombre": "Nahuel",
+        "apellido": "Tello",
+        "sexo": "M",
+        "edad":21
+    },
+    {
+        "nombre": "Nahuel",
+        "apellido": "Tello",
+        "sexo": "M",
+        "edad":43
+    },
+    {
+        "nombre": "Nahuel",
+        "apellido": "Tello",
+        "sexo": "M",
+        "edad":23
+    }
+]

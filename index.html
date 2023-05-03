@@ -4,13 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js"></script>
+    
     <title>PreEntrega 2 Matias Nahuel Tello Parra</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Pre Entrega 2 - Matias Nahuel Tello Parra</h1>
-    <p>En resumen, la segunda entrega es un algoritmo que permite la agregar, buscar y modificar una lista de personas,
-    teniendo en cuenta que persona es un objeto y las mismas se almacenan en un arreglo.</p>
+    <nav class="nav-bar"> 
+        <img src="./assets/img/undraw_interview_re_e5jn.svg" width="100px" alt="">
+    </nav>
+    
+    <main id="contenedor">
+        <div id="buscador">
+            <input id="buscador-cliente" type="text" placeholder="Buscar">
+            <button onclick="buscarPersona()">Buscar</button>
+        </div>
+        <br>
+        <div>
+            <form id="formulario">
+                <input type="text" placeholder="Nombre">
+                <input type="text" placeholder="Apellido">
+                <input type="number" placeholder="Edad">
+                <input type="text" placeholder="Sexo">
+                <input type="submit" value="Agregar">
+            </form>
+        </div>
+        <br>
+    </main>
+
+    
+    <script src="main.js"></script>
 </body>
 </html>
