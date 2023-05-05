@@ -5,8 +5,16 @@ const formulario = document.getElementById("formulario")
 const main = document.getElementById("contenedor")
 const buscadorMain = document.getElementById("buscador")
 const buscadorCliente = document.getElementById("buscador-cliente")
+const nombre = document.getElementById("nombreIn")
+const apellido = document.getElementById("apellidoIn")
+const edad = document.getElementById("edadIn")
+const sexo = document.getElementById("sexoIn")
 
-// creamos la funcion de objeto persona
+
+
+
+
+// creamos el objeto cliente
 class Cliente {
     constructor (nombre, apellido, sexo, edad) {
         this.nombre = nombre,
@@ -23,51 +31,85 @@ let cliente4 = new Cliente("Josefina", "Hernandez", "femenino", 15)
 let cliente5 = new Cliente("Matias", "Martinez", "masculino", 35)
 
 
+//Definimos por defecto una lista de clientes en el arreglo listaClientes
 const listaClientes = [cliente1, cliente2, cliente3, cliente4, cliente5];
 
-
-/* //Iteramos el array con for...of
-for (const cliente of listaClientes) {
-    //Creamos un nodo <ol> y agregamos al padre en cada ciclo
-    let li = document.createElement("ol");
-    li.innerHTML = `<h1> ${cliente.nombre} </h1>
-                    <h3> ${cliente.apellido} </h3>
-                    <p> ${cliente.sexo} </p>
-                    <p> ${cliente.edad} </p>
-                    <hr></hr>`
-    main.appendChild(li);
-}
-console.table(listaClientes) */
 
 
 //Definimos una funcion que pide el nombre de la persona para saber si se encuentra
 function buscarPersona() {
+    //obtenemos el valor del input del cliente a buscar
     let clienteBuscado = buscadorCliente.value.trim().toUpperCase()
-    
-
-    //Utilizamos la funcion de orden superior para filtrar el elemento persona
+    //Utilizamos la funcion de orden superior para filtrar el elemento cliente
     let clienteEncontrado = listaClientes.filter((cliente) => cliente.nombre.toUpperCase().includes(clienteBuscado))
 
     //Si esta dentro del rango muestra la persona por consola
     if (clienteEncontrado.length > 0) {
-        for (const cliente of listaClientes) {
-            //Creamos un nodo <ol> y agregamos al padre en cada ciclo
-            let mostrarCliente = document.createElement("ol");
+        for (const cliente of clienteEncontrado) {
+            //Creamos un div con la clase divCliente mostrando los datos del cliente encontrado
+            let mostrarCliente = document.createElement("div");
+            mostrarCliente.className = "divCliente"
             mostrarCliente.innerHTML = `<h1> ${cliente.nombre} </h1>
                     <h3> ${cliente.apellido} </h3>
                     <p> ${cliente.sexo} </p>
-                    <p> ${cliente.edad} </p>
-                    <hr></hr>`
+                    <p> ${cliente.edad} </p>`
             main.appendChild(mostrarCliente);
+            //agregamos los cambios al localstorage
+            localStorage.setItem('clientes', JSON.stringify(listaClientes))
         }
-        //console.table(clienteEncontrado)
+        console.table(clienteEncontrado)
     } else {
         //En caso contrario no se pudo encontrar
         let eventError = document.createElement("p")
+        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
+        eventError.className = "evento-error"
         eventError.innerHTML = `<p>No se pudo encontrar ninguna persona con ese nombre</p>`
         main.append(eventError)
     }
 }
+
+//Definimos una funcion para agregar una persona mas a la lista
+function agregarPersona() {
+    //obtenemos los datos del cliente
+    let name = nombre.value.trim()
+    let surname = apellido.value.trim()
+    let sex = sexo.value.trim()
+    let age = parseInt(edad.value)
+
+    //Verificamos que los datos sean los correctos, en  caso contrario no
+    if (name === "" || surname === "" || sex === "" || isNaN(age)) {
+        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
+        let eventError = document.createElement("p")
+        eventError.className = "evento-error"
+        eventError.innerHTML = `<p>Datos erróneos, intentar nuevamente!</p>`
+        main.appendChild(eventError)
+        return;
+    }
+
+    //Llamamos al constructor Persona para crear a la nueva persona
+    let clienteNuevo = new Cliente(name, surname, sex, age)
+
+    //Verficamos que la persona no este ingresada anteriormente
+    if (listaClientes.some((cliente) => cliente.nombre === clienteNuevo.nombre)) {
+        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
+        eventError = document.createElement("p")
+        eventError.className = "evento-error"
+        eventError.innerHTML = `<p>El cliente ya esta ingresado!</p>`
+        main.appendChild(eventError)
+        return
+    }
+
+    //Lo agregamos al arreglo el nuevo cliente
+    listaClientes.push(clienteNuevo)
+    //agregamos los cambios al localstorage
+    localStorage.setItem('clientes', JSON.stringify(listaClientes))
+    //verificamos que por consola este agregado el nuevo cliente
+    console.table(listaClientes)
+}
+
+//evento que envia los datos del cliente
+formulario.addEventListener("submit",agregarPersona)
+//let clients = JSON.parse(localStorage.getItem('clientes'))
 
 /* // creamos la funcion de objeto persona
 class Persona { 
