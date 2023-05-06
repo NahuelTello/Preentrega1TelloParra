@@ -5,30 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>PreEntrega 2 Matias Nahuel Tello Parra</title>
+    <title>PreEntrega 3</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="nav-bar"> 
         <img src="./assets/img/undraw_interview_re_e5jn.svg" width="100px" alt="">
     </nav>
     <div id="buscador" class="search">
-        <input id="buscador-cliente" type="text" placeholder="Buscar">
-        <button onclick="buscarPersona()">Buscar</button>
+        <input id="buscar-cliente" type="text" placeholder="Buscar">
+        <button type="submit" onclick="buscarCliente()">Buscar</button>
     </div>
     <br>
     <div class="container2">
         <form id="formulario">
-            <input id="nombreIn" type="text" placeholder="Nombre">
-            <input id="apellidoIn" type="text" placeholder="Apellido">
-            <input id="edadIn" type="number" placeholder="Edad">
-            <input id="sexoIn" type="text" placeholder="Sexo">
-            <input type="submit" value="Agregar">
+            <label for="nombre">Nombre:</label>
+            <input id="nombre-input" type="text" >
+
+            <label for="apellido">Apellido:</label>
+            <input id="apellido-input" type="text">
+
+            <label for="edad">Edad:</label>
+            <input id="edad-input" type="number" >
+
+            <label for="Sexo">Sexo:</label>
+            <input id="sexo-input" type="text" >
+
+            <button type="submit">Agregar</button>
         </form>
+        <button id="boton-mostrar" onclick="mostrarClientes()">Mostrar Lista de Clientes</button>
     </div>
     <br>
     <main id="contenedor" class="container">
     </main>
     <script src="main.js"></script>
+    
 </body>
 </html>

@@ -1,23 +1,30 @@
 /* Quiero armar una pagina donde me muestre una lista de clientes
 donde pueda buscar por su nombre (filtro), tambien pueda agregar y
 modificar el nombre */
+
+
+/* DOM */
 const formulario = document.getElementById("formulario")
+const nombre = document.getElementById("nombre-input")
+const apellido = document.getElementById("apellido-input")
+const edad = document.getElementById("edad-input")
+const sexo = document.getElementById("sexo-input")
+
+
+
 const main = document.getElementById("contenedor")
-const buscadorMain = document.getElementById("buscador")
-const buscadorCliente = document.getElementById("buscador-cliente")
-const nombre = document.getElementById("nombreIn")
-const apellido = document.getElementById("apellidoIn")
-const edad = document.getElementById("edadIn")
-const sexo = document.getElementById("sexoIn")
+
+const boton = document.getElementById("boton-mostrar")
+
+/* DOM */
 
 
 
-
-
+/* CLASE CLIENTE */
 // creamos el objeto cliente
 class Cliente {
     constructor (nombre, apellido, sexo, edad) {
-        this.nombre = nombre,
+            this.nombre = nombre,
             this.apellido = apellido,
             this.sexo = sexo,
             this.edad = edad
@@ -33,64 +40,37 @@ let cliente5 = new Cliente("Matias", "Martinez", "masculino", 35)
 
 //Definimos por defecto una lista de clientes en el arreglo listaClientes
 const listaClientes = [cliente1, cliente2, cliente3, cliente4, cliente5];
+/* CLASE CLIENTE */
 
+/* LOCALSTORAGE */
+//Luego lo almacenamos en el localStorage utilizando clave
+localStorage.setItem('listaClientesKey', JSON.stringify(listaClientes))
+/* LOCALSTORAGE */ 
 
-
-//Definimos una funcion que pide el nombre de la persona para saber si se encuentra
-function buscarPersona() {
-    //obtenemos el valor del input del cliente a buscar
-    let clienteBuscado = buscadorCliente.value.trim().toUpperCase()
-    //Utilizamos la funcion de orden superior para filtrar el elemento cliente
-    let clienteEncontrado = listaClientes.filter((cliente) => cliente.nombre.toUpperCase().includes(clienteBuscado))
-
-    //Si esta dentro del rango muestra la persona por consola
-    if (clienteEncontrado.length > 0) {
-        for (const cliente of clienteEncontrado) {
-            //Creamos un div con la clase divCliente mostrando los datos del cliente encontrado
-            let mostrarCliente = document.createElement("div");
-            mostrarCliente.className = "divCliente"
-            mostrarCliente.innerHTML = `<h1> ${cliente.nombre} </h1>
-                    <h3> ${cliente.apellido} </h3>
-                    <p> ${cliente.sexo} </p>
-                    <p> ${cliente.edad} </p>`
-            main.appendChild(mostrarCliente);
-            //agregamos los cambios al localstorage
-            localStorage.setItem('clientes', JSON.stringify(listaClientes))
-        }
-        console.table(clienteEncontrado)
-    } else {
-        //En caso contrario no se pudo encontrar
-        let eventError = document.createElement("p")
-        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
-        eventError.className = "evento-error"
-        eventError.innerHTML = `<p>No se pudo encontrar ninguna persona con ese nombre</p>`
-        main.append(eventError)
-    }
-}
-
+/* FUNCIONES */
 //Definimos una funcion para agregar una persona mas a la lista
-function agregarPersona() {
-    //obtenemos los datos del cliente
-    let name = nombre.value.trim()
-    let surname = apellido.value.trim()
-    let sex = sexo.value.trim()
-    let age = parseInt(edad.value)
+function agregarCliente(e) {
+    
+    e.preventDefault()
+    let nombreInput = nombre.value
+    let apellidoInput = apellido.value
+    let sexoInput = sexo.value
+    let edadInput = parseInt(edad.value)
 
-    //Verificamos que los datos sean los correctos, en  caso contrario no
-    if (name === "" || surname === "" || sex === "" || isNaN(age)) {
-        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
-        let eventError = document.createElement("p")
-        eventError.className = "evento-error"
-        eventError.innerHTML = `<p>Datos erróneos, intentar nuevamente!</p>`
-        main.appendChild(eventError)
-        return;
+    if (nombreInput === "" || apellidoInput === "" || sexoInput === "" || isNaN(edadInput)){
+        let alert = document.createElement("p")
+        alert.className = "evento-error"
+        alert.innerHTML = `<p>Datos erróneos, intentar nuevamente!</p>`
+        main.append(alert)
+        return
     }
 
-    //Llamamos al constructor Persona para crear a la nueva persona
-    let clienteNuevo = new Cliente(name, surname, sex, age)
+    let nuevoCliente = new Cliente(nombreInput, apellidoInput, sexoInput, edadInput)
 
+    
     //Verficamos que la persona no este ingresada anteriormente
-    if (listaClientes.some((cliente) => cliente.nombre === clienteNuevo.nombre)) {
+    let resultado = listaClientes.some((cliente) => cliente.nombre === nuevoCliente.nombre)
+    if (resultado) {
         //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
         eventError = document.createElement("p")
         eventError.className = "evento-error"
@@ -99,130 +79,97 @@ function agregarPersona() {
         return
     }
 
-    //Lo agregamos al arreglo el nuevo cliente
-    listaClientes.push(clienteNuevo)
-    //agregamos los cambios al localstorage
-    localStorage.setItem('clientes', JSON.stringify(listaClientes))
-    //verificamos que por consola este agregado el nuevo cliente
-    console.table(listaClientes)
+    listaClientes.push(nuevoCliente)
+    console.log(listaClientes)
+    
+    let clienteDiv = document.createElement("div")
+    clienteDiv.className = "clienteDiv"
+    clienteDiv.innerHTML = `<h1> ${nuevoCliente.nombre} </h1>
+                    <h3> ${nuevoCliente.apellido} </h3>
+                    <p> ${nuevoCliente.sexo} </p>
+                    <p> ${nuevoCliente.edad} </p>`
+    main.appendChild(clienteDiv)
+    
+    localStorage.setItem('listaClientesKey', JSON.stringify(listaClientes))
 }
 
-//evento que envia los datos del cliente
-formulario.addEventListener("submit",agregarPersona)
-//let clients = JSON.parse(localStorage.getItem('clientes'))
 
-/* // creamos la funcion de objeto persona
-class Persona { 
-    constructor (nombre, apellido, sexo, edad){
-        this.nombre = nombre,
-        this.apellido = apellido,
-        this.sexo = sexo,
-        this.edad = edad 
-        }
-    }
-//llamamos al constructor del objeto persona
-let persona1 = new Persona("Juan", "Tortorielo", "M", 22)
-let persona2 = new Persona("Maria", "De la Fuente", "F", 21)
-let persona3 = new Persona("Pedro", "Miranda", "F", 19)
-let persona4 = new Persona("Jorge", "Rodriguez", "M", 40)
+//Definimos una funcion para mostrar la lista de los clientes actuales
+function mostrarClientes() {
 
-// Creamos un arreglo que almacena objetos de personas
-let arrayPersonas = [persona1, persona2, persona3, persona4]
-// Mostramos por consola en forma de tabla  la lista de las personas
-console.table(arrayPersonas)
+    // Obtener el arreglo de clientes almacenado en el localStorage
+    let clientesArray = JSON.parse(localStorage.getItem('listaClientesKey')) || []
 
-//Definimos una funcion que pide el nombre de la persona para saber si se encuentra
-function buscarPeronsa() {
-    let nombrePersona = prompt("Ingresar el nombre de la persona que busca").trim().toUpperCase()
+    //limpiar el contenido previo
+    main.innerHTML = ''
 
-    //Utilizamos la funcion de orden superior para filtrar el elemento persona
-    let personaEncontrada = arrayPersonas.filter((persona)=> persona.nombre.toUpperCase().includes(nombrePersona))
-
-    //Si esta dentro del rango muestra la persona por consola
-    if(personaEncontrada.length > 0){
-        console.table(personaEncontrada)
-    } else{
-        //En caso contrario no se pudo encontrar
-        console.log("No se pudo encontrar a la persona intente nuevamente")
-    }
-}
-
-//Definimos una funcion para agregar una persona mas a la lista
-function agregarPersona() {
-    //Pedimos que ingrese los datos
-    let nombre = prompt("Ingrese el nombre").trim()
-    let apellido = prompt("Ingrese el apellido").trim()
-    let sexo = prompt("Ingrese el sexo").trim()
-    let edad = parseInt(prompt("Ingrese la edad"))
-
-    //Verificamos que los datos sean los correctos, en  caso contrario no
-    if (nombre === "" || apellido === "" || sexo === "" || isNaN(edad)) {
-        alert("Datos erróneos, intentar nuevamente!")
-        return;
-    }
-
-    //Llamamos al constructor Persona para crear a la nueva persona
-    let personaNueva = new Persona (nombre, apellido, sexo, edad)
-
-    //Verficamos que la persona no este ingresada anteriormente
-    if(arrayPersonas.some((persona)=> persona.nombre === personaNueva.nombre)){
-        alert("La persona ya esta ingresada! ")
-        return
-    }
-
-    //Lo agregamos al arreglo y mostramos por consola
-    arrayPersonas.push(personaNueva)
-    console.table(arrayPersonas)
-}
-
-// Definimos una función que recibe el arreglo de personas, el índice de la persona que queremos modificar y el nuevo nombre
-function modificarNombrePersona(arreglo, indice, nuevoNombre) {
-    // Verificamos si el índice está dentro del rango del arreglo
-    if (indice >= 0 && indice < arreglo.length) {
-        // Modificamos el nombre de la persona en el objeto correspondiente
-        arreglo[indice].nombre = nuevoNombre;
-        alert('Nombre Modificado!');
+    //Si hay clientes agregados muestra los mismos
+    if (clientesArray.length > 0){
+        // Recorrer el arreglo de clientes y agregar cada uno al DOM
+        
+        clientesArray.map(cliente => {
+            let li = document.createElement("table");
+            li.className = "divCliente"
+            li.innerHTML = `<tr><td>${cliente.nombre}</td><td>${cliente.apellido}</td><td>${cliente.sexo}</td><td>${cliente.edad}</td></tr>` 
+            main.appendChild(li);
+        })
     } else {
-        // Si el índice está fuera de rango, mostramos un mensaje de error
-        alert('El índice especificado está fuera de rango.');
+        //En caso contrario no muestra nada, y nos indica un cartel que no hay clientes cargados
+        let mostrarNoHayClientes = document.createElement("div");
+        mostrarNoHayClientes.className = "evento-error"
+        mostrarNoHayClientes.innerHTML = "No hay clientes cargados!"
+        main.append(mostrarNoHayClientes)
     }
+
+    console.table(clientesArray)
+
+}
+//Definimos una funcion que pide el nombre de la persona para saber si se encuentra
+function buscarCliente() {
+    const buscadorCliente = document.getElementById("buscar-cliente")
+    //obtenemos el valor del input del cliente a buscar
+    let clienteBuscado = buscadorCliente.value.trim().toUpperCase()
+
+    //Utilizamos la funcion de orden superior para filtrar el elemento cliente
+    let clienteEncontrado = listaClientes.filter((cliente) => cliente.nombre.toUpperCase().includes(clienteBuscado))
+    //Si encontramos algun cliente lo guardamos en la variable clienteEncontrado
+
+    if (clienteBuscado === ""){
+        //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
+        let eventError = document.createElement("p")
+        eventError.className = "evento-error"
+        eventError.innerHTML = `<p>NO INGRESO NINGUN NOMBRE PARA BUSCAR EL CLIENTE!</p>`
+        main.appendChild(eventError)
+    } else {
+        //Si esta dentro del rango muestra la persona por consola
+        if (clienteEncontrado.length > 0) {
+
+            clienteEncontrado.map(cliente => {
+                let mostrarCliente = document.createElement("div");
+                mostrarCliente.className = "divCliente"
+                mostrarCliente.innerHTML = `<h1> ${cliente.nombre} </h1>
+                    <h3> ${cliente.apellido} </h3>
+                    <p> ${cliente.sexo} </p>
+                    <p> ${cliente.edad} </p>`
+                main.appendChild(mostrarCliente);
+            })
+            
+            console.table(clienteEncontrado)
+        } else {
+            //En caso contrario no se pudo encontrar
+            let eventError = document.createElement("p")
+            //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
+            eventError.className = "evento-error"
+            eventError.innerHTML = `<p>No se pudo encontrar ninguna persona con ese nombre</p>`
+            main.append(eventError)
+        } 
+    }
+    buscarCliente.value = ''
 }
 
-let opcion = prompt('Ingrese una opcion. \n1) Buscar Cliente. \n2) Agregar Cliente. \n3) Modificar Cliente \n Salir (X) ')
-while (opcion != 'x' && opcion != 'X') {
-    {
-        if (parseInt(opcion) == 1) {
-            buscarPeronsa()
-        } else if (parseInt(opcion) == 2) {
-            agregarPersona()
-        } else if (parseInt(opcion) == 3) {
-            alert('Recorda que la longitud de la lista es de: ' + arrayPersonas.length)
-            let indicePersonaModificar = prompt('Ingrese en que ubicacion se encuentra esa persona dentro de la tabla')
-            let nombrePersonaModificar = prompt ('Ingrese el nuevo nombre de la persona que quiere modificar')
-            modificarNombrePersona(arrayPersonas,indicePersonaModificar, nombrePersonaModificar)
-            console.table(arrayPersonas)
-        } else {
-            alert('Elegiste una opción inválida')
-        };
-    }
+/* EVENTOS */
+//Envia los datos cargados del formulario
+formulario.addEventListener("submit", (e) => agregarCliente(e))
+/* EVENTOS */
 
-    opcion = prompt('Ingrese una opcion. \n1) Buscar Cliente. \n2) Agregar Cliente. \n3) Modificar Cliente \n Salir (X) ')
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* FUNCIONES */
