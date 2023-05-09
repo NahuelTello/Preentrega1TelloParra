@@ -69,7 +69,7 @@ function agregarCliente(e) {
 
     
     //Verficamos que la persona no este ingresada anteriormente
-    let resultado = listaClientes.some((cliente) => cliente.nombre === nuevoCliente.nombre)
+    let resultado = listaClientes.some((cliente) => (cliente.nombre === nuevoCliente.nombre) && (cliente.apellido === nuevoCliente.apellido))
     if (resultado) {
         //creamos un elemento tipo parrafo con la clase evento-error mostrando un texto
         eventError = document.createElement("p")
