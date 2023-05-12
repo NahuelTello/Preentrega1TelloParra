@@ -42,10 +42,6 @@ let cliente5 = new Cliente("Matias", "Martinez", "masculino", 35)
 const listaClientes = [cliente1, cliente2, cliente3, cliente4, cliente5];
 /* CLASE CLIENTE */
 
-/* LOCALSTORAGE */
-//Luego lo almacenamos en el localStorage utilizando clave
-localStorage.setItem('listaClientesKey', JSON.stringify(listaClientes))
-/* LOCALSTORAGE */ 
 
 /* FUNCIONES */
 //Definimos una funcion para agregar una persona mas a la lista
@@ -93,12 +89,11 @@ function agregarCliente(e) {
     localStorage.setItem('listaClientesKey', JSON.stringify(listaClientes))
 }
 
-
 //Definimos una funcion para mostrar la lista de los clientes actuales
 function mostrarClientes() {
 
     // Obtener el arreglo de clientes almacenado en el localStorage
-    let clientesArray = JSON.parse(localStorage.getItem('listaClientesKey')) || []
+    let clientesArray = (JSON.parse(localStorage.getItem('listaClientesKey')) || [])
 
     //limpiar el contenido previo
     main.innerHTML = ''
