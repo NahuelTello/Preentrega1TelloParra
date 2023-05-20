@@ -2,31 +2,55 @@
     {
         "nombre": "Nahuel",
         "apellido": "Tello",
-        "sexo": "M",
-        "edad":22
+        "sexo": "masculino",
+        "edad":22,
+        "email": "nuser@gmail.com",
+        "password":123456,
+        "img": "./assets/img/user.svg"
     },
     {
         "nombre": "Jorge",
         "apellido": "Morales",
-        "sexo": "M",
-        "edad":32
+        "sexo": "masculino",
+        "edad":32,
+        "email": "user@gmail.com",
+        "password":123456,
+        "img": "./assets/img/user.svg"
+    },
+    {
+        "nombre": "Thomas",
+        "apellido": "Tello",
+        "sexo": "masculino",
+        "edad":21,
+        "email": "user@gmail.com",
+        "password":123456,
+        "img": "./assets/img/user.svg"
     },
     {
         "nombre": "Nahuel",
         "apellido": "Tello",
-        "sexo": "M",
-        "edad":21
+        "sexo": "masculino",
+        "edad":43,
+        "email": "user@gmail.com",
+        "password":123456,
+        "img": "./assets/img/user.svg"
     },
     {
         "nombre": "Nahuel",
         "apellido": "Tello",
-        "sexo": "M",
-        "edad":43
+        "sexo": "masculino",
+        "edad":23,
+        "email": "user@gmail.com",
+        "password":123456,
+        "img": "./assets/img/user.svg"
     },
     {
-        "nombre": "Nahuel",
+        "nombre": "Agustina",
         "apellido": "Tello",
-        "sexo": "M",
-        "edad":23
+        "sexo": "femenino",
+        "edad": 23,
+        "email": "user@gmail.com",
+        "password": 123456,
+        "img": "./assets/img/user.svg"
     }
 ]
